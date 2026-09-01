@@ -1,5 +1,5 @@
 const express = require('express');
-const documentController = require('../controllers/documentController');
+const documentController = require('../controllers/documents.controller');
 const fileStorage = require('../repositories/fileStorage');
 
 const router = express.Router();
