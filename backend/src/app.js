@@ -11,6 +11,7 @@
 // usando multer com diskStorage. Não utilize provedores externos.
 
 const express = require('express');
+const multer = require('multer');
 const documentRoutes = require('./routes/documents.routes');
 
 const app = express();
@@ -23,6 +24,23 @@ app.get('/health', (req, res) => {
 });
 
 app.use(documentRoutes);
+
+// Middleware de erro centralizado: garante respostas JSON e evita vazar stack traces ao cliente.
+app.use((err, req, res, next) => {
+  if (res.headersSent) {
+    return next(err);
+  }
+
+  if (err instanceof multer.MulterError && err.code === 'LIMIT_FILE_SIZE') {
+    return res.status(413).json({ error: 'Arquivo excede o tamanho máximo permitido' });
+  }
+  if (err.message === 'Tipo de arquivo não permitido') {
+    return res.status(400).json({ error: err.message });
+  }
+
+  console.error(err);
+  res.status(500).json({ error: 'Erro interno do servidor' });
+});
 
 if (require.main === module) {
   app.listen(PORT, () => {

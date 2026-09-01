@@ -1,10 +1,10 @@
 const express = require('express');
 const documentController = require('../controllers/documents.controller');
-const fileStorage = require('../repositories/fileStorage');
+const uploadMiddleware = require('../middlewares/upload');
 
 const router = express.Router();
 
-router.post('/upload', fileStorage.upload.single('file'), documentController.upload);
+router.post('/upload', uploadMiddleware.upload.single('file'), documentController.upload);
 router.get('/documents', documentController.list);
 router.get('/documents/:id/download', documentController.download);
 
