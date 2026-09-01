@@ -1,6 +1,6 @@
 // Regras de negócio para upload, listagem e download de documentos.
 const crypto = require('crypto');
-const documentRepository = require('../repositories/documentRepository');
+const documentRepository = require('../repositories/documents.repository');
 const fileStorage = require('../repositories/fileStorage');
 
 function registerUpload(file, owner) {

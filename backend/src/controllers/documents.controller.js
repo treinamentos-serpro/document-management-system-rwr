@@ -1,6 +1,6 @@
 // Tratamento de entrada/saída HTTP e validação básica das requisições de documentos.
 const fs = require('fs');
-const documentService = require('../services/documentService');
+const documentService = require('../services/documents.service');
 
 function toResponseBody(document) {
   const { id, originalName, size, uploadedAt, owner } = document;
